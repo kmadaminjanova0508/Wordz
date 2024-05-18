@@ -27,7 +27,7 @@ export default function PlayScreen() {
       </View>
      </View>
      </TouchableOpacity>
-     <View className='flex flex-row flex-wrap justify-center gap-2 mt-2'>
+     <View className='flex  flex-wrap flex-row justify-center gap-2 mt-2'>
      <View className='relative mt-3'>
       <Image className='w-[167.94px] h-[166px]'  source={require('../assets/card1.png')}/>
       <View className='absolute bottom-0 left-0 right-0 bg-opacity-50 p-4 flex flex-row justify-between'>

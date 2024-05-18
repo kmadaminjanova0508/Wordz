@@ -15,6 +15,9 @@ export default function QuizScreen2() {
   const [button2Clicked, setButton2Clicked] = useState(false);
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
+
+  
+
     const handleButton1Click = () => {
         setButton2Visible(false);
         setInputFocused(true); 

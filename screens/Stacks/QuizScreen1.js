@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useCallback} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect  } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons';
 import QuizData from '../Data/QuizData';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +15,19 @@ export default function QuizScreen1() {
     const [correctOption,setcorrectOption] = useState(null)
     const [isOptionDisabled, setIsOptionDisabled] = useState(null)
 
+
+    const resetQuiz = () => {
+      setCurrentQuestion(0);
+      setCurrentOptionSelected(null);
+      setcorrectOption(null);
+      setIsOptionDisabled(false);
+    };
+  
+    useFocusEffect(
+      useCallback(() => {
+        resetQuiz();
+      }, [])
+    );
    
 
    const validateAnswer = (selectedOption) =>{

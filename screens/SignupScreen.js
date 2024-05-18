@@ -24,8 +24,8 @@ export default function SignupScreen() {
        <View className='top-[90px] flex-1 bg-white w-full items-center' style={{borderTopLeftRadius:30, borderTopRightRadius:30}}>
         <View className='items-center content-center flex'>
         <Text className='text-[28px] font-bold mt-10'>Get Started Now</Text>    
-        <Text className='text-[17px] font-normal mt-2 text-[#545458]'>Please provide your information</Text>    
-        <View className='flex items-center mx-4 space-y-2.5 mt-10'>
+        <Text className='text-[17px] font-normal mt-3 text-[#545458]'>Please provide your information</Text>    
+        <View className='flex items-center mx-4 space-y-[10px] mt-10'>
         <View className=' bg-[#FCFCFC]  justify-center items-center  w-[346px]  h-[50px] px-3 rounded-[12px]  border  border-slate-200/50 '>
         <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Full name"  placeholderTextColor="rgba(60, 60, 67, 0.6)" />
          </View>
@@ -35,12 +35,12 @@ export default function SignupScreen() {
         <View className='m-[15px] bg-[#FCFCFC]  justify-center items-center  w-[346px]  h-[50px] px-3 rounded-[12px]  border  border-slate-200/50 '>
       <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Password"  placeholderTextColor="rgba(60, 60, 67, 0.6)" />
          </View>
-         <View className='w-[346px] h-[50px] mb-10 '>
-            <TouchableOpacity className='w-full h-full bg-[#00A3FF] rounded-[9px] mb-3' onPress={()=> navigation.push('Navigation')}>
+         <View className='w-[346px] h-[50px] mb-8  mt-[50px]'>
+            <TouchableOpacity className='w-full h-full bg-[#00A3FF] rounded-[9px] ' onPress={()=> navigation.push('Navigation')}>
                 <Text className='text-xl font-normal text-white text-center mt-3'>Sign up </Text>
             </TouchableOpacity>
          </View>
-         <View className="flex justify-center items-center flex-row space-x-2 w-[347px] mb-6">
+         <View className="flex justify-center items-center flex-row space-x-6 w-[347px] mb-5">
          <View className='flex-1 h-[2px] bg-[#F2F2F7]'></View>
           <Text className='text-[#D1D1D6]'>OR</Text>
           <View className='flex-1 h-[2px] bg-[#F2F2F7]'></View>
