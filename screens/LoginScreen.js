@@ -1,11 +1,47 @@
-import { View, Text, Image, TouchableOpacity, TextInput,ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, Image, TouchableOpacity, TextInput,ScrollView, Alert } from 'react-native'
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 export default function LoginScreen() {
+  const [email,setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigation = useNavigation ();
+
+  const handleForgetPassword = () => {
+    sendPasswordResetEmail(auth,email)
+    .then(()=>{
+      //Password reset sended!
+      Alert.alert("Password reset link send to your email seccessfully!!")
+      //...
+    })
+    .catch ((error) => {
+      const errorCode =error.code;
+      const errorMessage = error.message;
+    })
+  }
+
+
+
+
+  const hendleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      // Navigation screen after successful sign-up
+      navigation.push('Navigation');
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        Alert.alert('Sign Up Error', 'The email address is already in use by another account.');
+      } else {
+        Alert.alert('Sign Up Error', error.message);
+      }
+    }
+  };
   return (
     <ScrollView>
     <View className="h-full w-full flex items-center">
@@ -28,17 +64,18 @@ export default function LoginScreen() {
         <View className='flex items-center mx-4 space-y-3 mt-10'>
      
           <View className=' bg-[#FCFCFC]  justify-center items-center  w-[346px]  h-[50px] px-3 rounded-[12px]  border  border-slate-200/50 '>
-        <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Email"  placeholderTextColor="rgba(60, 60, 67, 0.6)" />
+        <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Email"  placeholderTextColor="rgba(60, 60, 67, 0.6)" onChangeText={(email) => setEmail(email)} />
          </View>
         <View className=' bg-[#FCFCFC]  justify-center items-center  w-[346px]  h-[50px] px-3 rounded-[12px]  border  border-slate-200/50 '>
-        <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Password"  placeholderTextColor="rgba(60, 60, 67, 0.6)" />
+        <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Password"  placeholderTextColor="rgba(60, 60, 67, 0.6) " secureTextEntry={true}  onChangeText={(password) => setPassword(password)} />
          </View>
          <View className='w-[346px] h-[50px] mb-2'>
-            <TouchableOpacity className='w-full h-full bg-[#00A3FF] rounded-[9px] mb-3' onPress={()=> navigation.push('Navigation')}>
+            <TouchableOpacity className='w-full h-full bg-[#00A3FF] rounded-[9px] mb-3' onPress={hendleLogin}>
                 <Text className='text-xl font-normal text-white text-center mt-3'>Log in</Text>
             </TouchableOpacity>
          </View>
-         <Text className='mb-8 text-[#787880]'>Forgot your password?</Text>
+         <TouchableOpacity onPress={handleForgetPassword}>
+         <Text className='mb-8 text-[#787880]'>Forgot your password?</Text></TouchableOpacity>
          <View className="flex justify-center items-center flex-row space-x-2 w-[347px] mb-6">
          <View className='flex-1 h-[2px] bg-[#F2F2F7]'></View>
           <Text className='text-[#D1D1D6]'>OR</Text>

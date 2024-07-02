@@ -80,3 +80,27 @@ const styles = StyleSheet.create({
     width: "90%",
   },
 });
+
+
+
+
+
+
+
+
+////Logic 
+
+const handleSignUp = async () => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, Email, Password);
+    const user = userCredential.user;
+    // Navigate to the Navigation screen after successful sign-up
+    navigation.push('Navigation');
+  } catch (error) {
+    if (error.code === 'auth/email-already-in-use') {
+      Alert.alert('Sign Up Error', 'The email address is already in use by another account.');
+    } else {
+      Alert.alert('Sign Up Error', error.message);
+    }
+  }
+};

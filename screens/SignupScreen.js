@@ -1,11 +1,42 @@
-import { View, Text, Image, TouchableOpacity, TextInput, ScrollView} from 'react-native'
-import React from 'react'
+import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, Alert} from 'react-native'
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
-
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../firebaseConfig'
 
 export default function SignupScreen() {
-  const navigation = useNavigation ();
+ const [Email,setEmail] = useState("");
+ const [Password, setPassword] = useState("");
+ const [Name,SetName] = useState("");
+
+ const navigation = useNavigation ();
+
+ const handleSignUp = () => {
+
+
+
+ createUserWithEmailAndPassword (auth , Email ,Password)
+ .then((userCredential) => {
+  //Singed In
+  const user = userCredential.user;
+  if(user){
+    navigation.navigate("Login");
+  }
+
+ })
+ .catch((error) => {
+ const errorCode = error.code;
+ const errorMessage = error.message
+ Alert.alert(errorMessage)
+
+
+ })
+ 
+}
+
+
+ 
   return (
     <ScrollView>
     <View className="h-full w-full flex items-center">
@@ -30,13 +61,13 @@ export default function SignupScreen() {
         <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Full name"  placeholderTextColor="rgba(60, 60, 67, 0.6)" />
          </View>
         <View className=' bg-[#FCFCFC]  justify-center items-center  w-[346px]  h-[50px] px-3 rounded-[12px]  border  border-slate-200/50 '>
-      <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Email"  placeholderTextColor="rgba(60, 60, 67, 0.6)" />
+      <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Email"  placeholderTextColor="rgba(60, 60, 67, 0.6)" onChangeText={(email) => setEmail(email)} />
          </View>
         <View className='m-[15px] bg-[#FCFCFC]  justify-center items-center  w-[346px]  h-[50px] px-3 rounded-[12px]  border  border-slate-200/50 '>
-      <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Password"  placeholderTextColor="rgba(60, 60, 67, 0.6)" />
+      <TextInput className='text-[20px]  w-[90%] placeholder:text-[17px]'   placeholder="Password"  placeholderTextColor="rgba(60, 60, 67, 0.6)" onChangeText={(password) => setPassword(password)}  />
          </View>
          <View className='w-[346px] h-[50px] mb-8  mt-[50px]'>
-            <TouchableOpacity className='w-full h-full bg-[#00A3FF] rounded-[9px] ' onPress={()=> navigation.push('Navigation')}>
+            <TouchableOpacity className='w-full h-full bg-[#00A3FF] rounded-[9px] ' onPress={handleSignUp}>
                 <Text className='text-xl font-normal text-white text-center mt-3'>Sign up </Text>
             </TouchableOpacity>
          </View>
